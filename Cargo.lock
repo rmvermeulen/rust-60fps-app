@@ -827,6 +827,7 @@ dependencies = [
  "cfg-if 0.1.10",
  "libc",
  "wasi",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -2110,6 +2111,7 @@ version = "0.1.0"
 dependencies = [
  "rand 0.7.3",
  "sixtyfps",
+ "wasm-bindgen",
 ]
 
 [[package]]
