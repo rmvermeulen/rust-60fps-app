@@ -70,5 +70,24 @@ sixtyfps::sixtyfps! {
     }
 }
 fn main() {
-    MainWindow::new().run();
+    use sixtyfps::Model;
+
+    let main_window = MainWindow::new();
+
+    // get tiles from the model
+    let mut tiles: Vec<TileData> = main_window.get_memory_tiles().iter().collect();
+    // duplicate tiles to get pairs of each icon
+    tiles.extend(tiles.clone());
+
+    // random mix
+    use rand::seq::SliceRandom;
+    let mut rng = rand::thread_rng();
+    tiles.shuffle(&mut rng);
+
+    // assign shuffled vec to model
+    let tiles_model = std::rc::Rc::new(sixtyfps::VecModel::from(tiles));
+    main_window.set_memory_tiles(sixtyfps::ModelHandle::new(tiles_model.clone()));
+
+    // run app
+    main_window.run();
 }
