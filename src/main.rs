@@ -61,8 +61,8 @@ sixtyfps::sixtyfps! {
             { image: img!"icons/video.png" },
         ];
         for tile[i] in memory_tiles : MemoryTile {
-            x: mod(i, 4) * 74px;
-            y: floor(i / 4) * 74px;
+            x: 16px + mod(i, 4) * 74px;
+            y: 16px + floor(i / 4) * 74px;
             width: 64px;
             height: 64px;
             icon: tile.image;
