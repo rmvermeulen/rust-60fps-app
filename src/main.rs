@@ -44,11 +44,12 @@ sixtyfps::sixtyfps! {
         }
     }
     MainWindow := Window {
+        signal restart();
         signal check_if_pair_solved();
         property <bool> disable_tiles;
         // dimensions
         width: 326px;
-        height: 326px;
+        height: 350px;
         // to create the model
         property <[TileData]> memory_tiles: [
             { image: img!"icons/at.png" },
@@ -74,6 +75,25 @@ sixtyfps::sixtyfps! {
                     tile.image_visible = !tile.image_visible;
                     root.check_if_pair_solved();
                 }
+            }
+        }
+
+        Rectangle {
+            width: 200px;
+            height: 32px;
+            x: (parent.width / 2) - 100px;
+            y: parent.height - 33px;
+            color: area.pressed ? #5050ff : #0000ff;
+            border-radius: 8px;
+            Text {
+                x: parent.width / 4;
+                y: (parent.height - 28px) / 2;
+                text: "Restart";
+                color: white;
+                font-size: 28px;
+            }
+            area := TouchArea {
+                clicked => { root.restart() }
             }
         }
     }
