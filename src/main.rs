@@ -18,7 +18,7 @@ sixtyfps::sixtyfps! {
         animate color { duration: 800ms; }
 
         Image {
-            source: img!"icons/bus.png";
+            source: parent.icon;
             width: parent.width;
             height: parent.height;
         }
@@ -69,7 +69,6 @@ sixtyfps::sixtyfps! {
         }
     }
 }
-
 fn main() {
     MainWindow::new().run();
 }
