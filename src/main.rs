@@ -98,14 +98,26 @@ sixtyfps::sixtyfps! {
         }
     }
 }
+// use std::rc::Rc;
+// fn get_tiles(main_window_weak: sixtyfps::Weak<MainWindow>) -> Rc<Vec<TileData>> {
+//     let main_window = main_window_weak.unwrap();
+//     // get tiles from the model
+//     let mut tiles: Vec<TileData> = main_window.get_memory_tiles().iter().collect();
+//     // duplicate tiles to get pairs of each icon
+//     tiles.extend(tiles.clone());
+//     Rc::new(tiles)
+// }
 
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen(start))]
 pub fn main() {
     use sixtyfps::Model;
+    use std::cell::RefCell;
+    use std::rc::Rc;
 
     let main_window = MainWindow::new();
 
     // get tiles from the model
+    // let tiles = get_tiles(main_window.as_weak());// get tiles from the model
     let mut tiles: Vec<TileData> = main_window.get_memory_tiles().iter().collect();
     // duplicate tiles to get pairs of each icon
     tiles.extend(tiles.clone());
@@ -116,12 +128,12 @@ pub fn main() {
     tiles.shuffle(&mut rng);
 
     // assign shuffled vec to model
-    let tiles_model = std::rc::Rc::new(sixtyfps::VecModel::from(tiles));
+    let tiles_model = Rc::new(sixtyfps::VecModel::from(tiles));
     main_window.set_memory_tiles(sixtyfps::ModelHandle::new(tiles_model.clone()));
 
     // handlers
     let close_delay = std::time::Duration::from_millis(500);
-    let mw_weak = main_window.as_weak();
+    let main_window_weak = main_window.as_weak();
     main_window.on_check_if_pair_solved(move || {
         let mut flipped_tiles = tiles_model
             .iter()
@@ -138,7 +150,7 @@ pub fn main() {
                     tile2.solved = true;
                     tiles_model.set_row_data(id2, tile2.clone());
                 } else {
-                    let main_window = mw_weak.unwrap();
+                    let main_window = main_window_weak.unwrap();
                     main_window.set_disable_tiles(true);
                     let tiles_model = tiles_model.clone();
                     sixtyfps::Timer::single_shot(close_delay, move || {
@@ -154,6 +166,18 @@ pub fn main() {
                 // there's no pair of tiles
             }
         }
+    });
+
+    // restart the app
+    let main_window_weak = main_window.as_weak();
+    main_window.on_restart(move || {
+        println!("Restart!!");
+        let main_window = main_window_weak.unwrap();
+        // create a shuffled version of the data
+        tiles.shuffle(&mut rng);
+        // assign shuffled vec to model
+        let tiles_model = std::rc::Rc::new(sixtyfps::VecModel::from(tiles));
+        main_window.set_memory_tiles(sixtyfps::ModelHandle::new(tiles_model.clone()));
     });
 
     // run app
