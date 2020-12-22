@@ -3,6 +3,7 @@ name = "sixtyfps-apps"
 version = "0.1.0"
 authors = ["Rasmus Vermeulen <rasmus_vermeulen@tutanota.com>"]
 edition = "2018"
+default-run = "memory"
 
 [[bin]]
 name = "memory"
