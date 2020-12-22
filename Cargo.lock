@@ -1213,15 +1213,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "memory"
-version = "0.1.0"
-dependencies = [
- "rand 0.7.3",
- "sixtyfps",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "miniz_oxide"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2034,6 +2025,15 @@ dependencies = [
  "sixtyfps-macros",
  "sixtyfps-rendering-backend-default",
  "vtable",
+]
+
+[[package]]
+name = "sixtyfps-apps"
+version = "0.1.0"
+dependencies = [
+ "rand 0.7.3",
+ "sixtyfps",
+ "wasm-bindgen",
 ]
 
 [[package]]

@@ -1,8 +1,16 @@
 [package]
-name = "memory"
+name = "sixtyfps-apps"
 version = "0.1.0"
 authors = ["Rasmus Vermeulen <rasmus_vermeulen@tutanota.com>"]
 edition = "2018"
+
+[[bin]]
+name = "memory"
+path = "src/memory.rs"
+
+[[bin]]
+name = "assets-manager"
+path = "src/assets_manager.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -16,5 +24,5 @@ rand = { version = "0.7", features = ["wasm-bindgen"] }
 
 [lib]
 name = "memory_web"
-path = "src/main.rs"
+path = "src/memory.rs"
 crate-type = ["cdylib"]
